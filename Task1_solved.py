@@ -23,7 +23,7 @@ def visualize(y1, y2):
         x3 = np.linspace(x[idx], x[idx+1])
         y1_new = np.linspace(y1[idx], y1[idx+1])
         y2_new = np.linspace(y2[idx], y2[idx+1])
-        tmp_idx = np.argwhere(np.isclose(y1_new, y2_new, atol=0.1)).reshape(-1)
+        tmp_idx = np.argwhere(np.isclose(y1_new, y2_new, atol=0.001)).reshape(-1)
 
         if tmp_idx.size != 0:
             cross_point_coords = {'x': x3[tmp_idx], 'y': y2_new[tmp_idx]}
