@@ -11,7 +11,8 @@ def get_data_from_web_and_parses_it():
     print()
     try:
         response = requests.get(
-            'http://ir.eia.gov/ngs/wngsr.json').text.encode("iso-8859-1")
+            'http://ir.eia.gov/ngs/wngsr.json')
+        response = response.content.decode(response.apparent_encoding)
         response_json = json.loads(response)
         net_changes = []
         for data_series in response_json['series']:
