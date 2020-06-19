@@ -3,15 +3,16 @@ import time
 import requests
 import json
 import numpy as np
+import argparse
 
 
 def get_data_from_web_and_parses_it():
     '''Sends a request to web, gets a result and parses it'''
     print()
     try:
-        response = requests.get('http://ir.eia.gov/ngs/wngsr.json')
-        response_text_raw = response.text.replace('ï»¿', '')
-        response_json = json.loads(response_text_raw)
+        response = requests.get(
+            'http://ir.eia.gov/ngs/wngsr.json').text.encode("iso-8859-1")
+        response_json = json.loads(response)
         net_changes = []
         for data_series in response_json['series']:
             name = data_series['name']
@@ -23,27 +24,22 @@ def get_data_from_web_and_parses_it():
                 net_changes.append(net_change)
         average_net_change = np.average(net_changes)
         print(f'Average meaning of net changes is {average_net_change}')
-    except Exception:
+    except ValueError:
         print('Something went wrong!')
 
 
 def get_time_to_start_and_run_script():
     '''Picks start time and run parser'''
     current_time = datetime.now().time().strftime('%H:%M')
-    start_time = "11:53"
+    start_time = "16:22"
 
-    user_choice = input('''Would like to pick time to start: 1.Yes
-                                  2.No ''')
-    print()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--starts", help="changes start time")
+    args = parser.parse_args()
+    if args.starts:
+        start_time = args.starts
 
-    if user_choice == '1':
-        start_time = input('Pick time you want to start(format: HH:MM) ')
-        print(f'Script starts at {start_time}')
-    elif user_choice == '2':
-        print(f'Script starts at {start_time}')
-    else:
-        print(f'Incorrect input. Script starts at {start_time}')
-
+    print(f'Parsing starts at {start_time}')
     while current_time != start_time:
         current_time = datetime.now().time().strftime('%H:%M')
         time.sleep(1)
