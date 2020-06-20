@@ -2,16 +2,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def make_cumsum():
-    """Creates sequence"""
-    seq1 = [np.random.randint(-1, 2) for _ in range(100)]
-    seq2 = np.cumsum(seq1)
-    return seq2
+class NumberArray():
+    """Number array to put on graph"""
+
+    def __init__(self):
+        self.seq1 = [np.random.randint(-1, 2) for _ in range(100)]
+        self.seq2 = np.cumsum(self.seq1)
+        self.length = len(self.seq2)
 
 
 def visualize(y1, y2):
     """Visualizes graphs and shows intersections"""
-    x = np.arange(len(y1))
+    x = np.arange(y1.length)
+    y1 = y1.seq2
+    y2 = y2.seq2
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.plot(x, y1, color='blue')
@@ -35,9 +39,9 @@ def visualize(y1, y2):
 
 
 def main():
-    seq1 = make_cumsum()
-    seq2 = make_cumsum()
-    visualize(seq1, seq2)
+    array_to_graph1 = NumberArray()
+    array_to_graph2 = NumberArray()
+    visualize(array_to_graph1, array_to_graph2)
 
 
 if __name__ == '__main__':

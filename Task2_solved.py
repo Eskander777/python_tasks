@@ -7,7 +7,7 @@ import argparse
 
 
 def get_data_from_web_and_parses_it():
-    '''Sends a request to web, gets a result and parses it'''
+    """Sends a request to web, gets a result and parses it"""
     print()
     try:
         response = requests.get(
@@ -30,7 +30,7 @@ def get_data_from_web_and_parses_it():
 
 
 def get_time_to_start_and_run_script():
-    '''Picks start time and starts parser'''
+    """Picks start time and starts parser"""
     current_time = datetime.now().time().strftime('%H:%M')
     start_time = "16:22"
 
